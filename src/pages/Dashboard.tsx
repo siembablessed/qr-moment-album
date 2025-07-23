@@ -110,21 +110,13 @@ const Dashboard = () => {
       <div className="border-b border-border/50 bg-card/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Avatar className="h-16 w-16">
-                  <AvatarImage src={profile?.avatar_url} />
-                  <AvatarFallback className="text-lg">
-                    {profile?.display_name?.charAt(0)?.toUpperCase() || "U"}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <h1 className="text-2xl font-bold">
-                    Welcome back, {profile?.display_name || "User"}!
-                  </h1>
-                  <p className="text-muted-foreground">
-                    Manage your events and photo collections
-                  </p>
-                </div>
+              <div>
+                <h1 className="text-2xl font-bold">
+                  Welcome back, {profile?.display_name || "User"}!
+                </h1>
+                <p className="text-muted-foreground">
+                  Manage your events and photo collections
+                </p>
               </div>
               <div className="flex items-center gap-3">
                 <Button onClick={() => navigate("/create-event")} variant="hero">
@@ -272,7 +264,7 @@ const Dashboard = () => {
                         Max {event.max_photos} photos
                       </div>
                     </div>
-                    <div className="flex gap-2 mt-4">
+                    <div className="flex gap-2 mt-6">
                       <Button 
                         variant="outline" 
                         size="sm" 
