@@ -12,6 +12,7 @@ import EventView from "./pages/EventView";
 import EventManage from "./pages/EventManage";
 import EventGuest from "./pages/EventGuest";
 import Pricing from "./pages/Pricing";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/settings" element={<Settings />} />
         <Route path="/event/:id" element={<EventView />} />
         <Route path="/event/:id/manage" element={<EventManage />} />
         <Route path="/guest/:id" element={<EventGuest />} />
