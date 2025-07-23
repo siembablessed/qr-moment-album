@@ -4,10 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Calendar, MapPin, Users, QrCode, Settings, Camera } from "lucide-react";
+import { Plus, Calendar, MapPin, Users, QrCode, Settings, Camera, User, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 interface Profile {
   display_name: string;
@@ -26,7 +33,7 @@ interface Event {
 }
 
 const Dashboard = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -102,28 +109,59 @@ const Dashboard = () => {
       {/* Header */}
       <div className="border-b border-border/50 bg-card/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Avatar className="h-16 w-16">
-                <AvatarImage src={profile?.avatar_url} />
-                <AvatarFallback className="text-lg">
-                  {profile?.display_name?.charAt(0)?.toUpperCase() || "U"}
-                </AvatarFallback>
-              </Avatar>
-              <div>
-                <h1 className="text-2xl font-bold">
-                  Welcome back, {profile?.display_name || "User"}!
-                </h1>
-                <p className="text-muted-foreground">
-                  Manage your events and photo collections
-                </p>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar className="h-16 w-16">
+                  <AvatarImage src={profile?.avatar_url} />
+                  <AvatarFallback className="text-lg">
+                    {profile?.display_name?.charAt(0)?.toUpperCase() || "U"}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h1 className="text-2xl font-bold">
+                    Welcome back, {profile?.display_name || "User"}!
+                  </h1>
+                  <p className="text-muted-foreground">
+                    Manage your events and photo collections
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Button onClick={() => navigate("/create-event")} variant="hero">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create Event
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="relative h-8 w-8 rounded-full">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={profile?.avatar_url} />
+                        <AvatarFallback className="bg-primary text-primary-foreground">
+                          {profile?.display_name?.charAt(0)?.toUpperCase() || "U"}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <div className="flex items-center justify-start gap-2 p-2">
+                      <div className="flex flex-col space-y-1 leading-none">
+                        <p className="font-medium">{user?.email}</p>
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate("/settings")}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={signOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
-            <Button onClick={() => navigate("/create-event")} variant="hero">
-              <Plus className="h-4 w-4 mr-2" />
-              Create Event
-            </Button>
-          </div>
         </div>
       </div>
 
