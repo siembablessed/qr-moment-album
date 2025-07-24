@@ -99,6 +99,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_color: string | null
           avatar_url: string | null
           created_at: string
           display_name: string | null
@@ -107,6 +108,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          avatar_color?: string | null
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
@@ -115,6 +117,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          avatar_color?: string | null
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
@@ -129,7 +132,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_random_avatar_color: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
